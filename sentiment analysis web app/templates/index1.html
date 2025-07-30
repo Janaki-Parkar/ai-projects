@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analysis App</title>
+    <style>
+        body { font-family: Arial; padding: 40px; background-color: #f7f7f7; }
+        h1 { color: #333; }
+        textarea { width: 100%; height: 150px; padding: 10px; font-size: 16px; }
+        input[type="submit"] { padding: 10px 20px; margin-top: 10px; font-size: 16px; }
+        .result { margin-top: 20px; background: #fff; padding: 15px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Sentiment Analysis Using TextBlob</h1>
+    <form method="post">
+        <textarea name="text" placeholder="Enter text to analyze..." required>{{ text or '' }}</textarea><br>
+        <input type="submit" value="Analyze">
+    </form>
+
+    {% if sentiment %}
+    <div class="result">
+        <p><strong>Entered Text:</strong> {{ text }}</p>
+        <p><strong>Sentiment:</strong> {{ sentiment }}</p>
+        <p><strong>Polarity Score:</strong> {{ polarity }}</p>
+        <p><strong>Subjectivity Score:</strong> {{ subjectivity }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
