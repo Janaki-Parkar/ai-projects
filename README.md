@@ -7,6 +7,13 @@ This repository contains 4 intermediate-level Python projects:
 
 1. **Voice Assistant**  
    A personal assistant that can perform tasks like setting reminders, checking weather, and reading news using speech recognition and text-to-speech.
+   packages to install  
+   1) pip install pyttsx3
+   2) pip install schedule
+   3) pip install speechrecognition 
+   4) pip install requests
+   5) pip install serpapi 
+   6) pip install GoogleSearch
 
 2. **Sentiment Analysis Web App**  
    A Flask/Django web app that classifies user-entered text as positive, negative, or neutral using TextBlob.
