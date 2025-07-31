@@ -7,6 +7,7 @@ model=gai.GenerativeModel('gemini-2.0-flash')
 
 serpapi_key = '5ea1d4f9f868c3da57b61dfe42a42e3744980e32a9c8f4b50479ce3d36cd0c48'
 
+#---------google search
 def google_search(query):
     param={
         'q': query,
@@ -22,6 +23,7 @@ def google_search(query):
         return '\n'.join([res['snippet'] for res in results['organic_results'][:5]])
     return 'no result found.'
 
+#----------chat with gemini
 def chat_with_gemini(query,chat_history):
     search_result = google_search(query)
     prompt = "\n".join(chat_history)
@@ -31,8 +33,9 @@ def chat_with_gemini(query,chat_history):
         return response.text.strip() if response.text else "No response from Gemini."
     except Exception as e:
         return f"Gemini error: {e}"
-def s_c():
 
+#-----------start chat
+def start_chat():
     chat_history=[]
     while True:
         user_input = input('prompt:   ')
@@ -42,8 +45,9 @@ def s_c():
         res = chat_with_gemini(user_input,chat_history)
         chat_history.append(f'AI : {res}')
         print(f'AI:{res}')
-    print('ch')
+
     for i in chat_history:
         print(i)
+#------------main
 if __name__ == "__main__":
     s_c()
