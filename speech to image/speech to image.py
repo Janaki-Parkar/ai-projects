@@ -5,13 +5,15 @@ import speech_recognition as sr
 from deep_translator  import GoogleTranslator
 
 def speech_to_image():
-    #mapi key
+
+#-------------monster api key
     api_key='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IjVhYjE3NjAyZTc4ZmQwNDM4YjU1OThlOTcyMTkxYzQ0IiwiY3JlYXRlZF9hdCI6IjIwMjUtMDctMTVUMTU6MTE6MTguNzAyNzIxIn0.KzynP1J6q66gI9vUmiCdE1I0v_f2-wb2fH3E_vrG3bg'
-    #ini cli
+
+#--------------initialize client
     monster_client = client(api_key)
     recognizer = sr.Recognizer()
 
-    print('''select a preferred language: 
+    print(''' select a preferred language: 
             1. hindi
             2. marathi
                         ''')
@@ -22,34 +24,37 @@ def speech_to_image():
         elif lang_choice == 2:
             lang_code = 'mr-IN'
         else:
-            print("Invalid choice.")
+            print(" Invalid choice.")
             return
+
     except ValueError:
-        print("Please enter a number.")
+        print(" Please enter a number.")
         return
+
+#------------microphine initialization
 
     with sr.Microphone() as source:
         print('speak')
         try:
             audio = recognizer.listen(source, timeout=10, phrase_time_limit=40)
             or_txt = recognizer.recognize_google(audio, language=lang_code)
-            print("🗣️ Original Text:", or_txt)
-            print("🔹 Raw audio captured. Transcribing...")
+            print(" Original Text:", or_txt)
+            print(" Raw audio captured. Transcribing...")
 
             en_txt =GoogleTranslator(source='auto', target='en').translate(or_txt)
-            print("🌍 Translated to English:", en_txt)
+            print(" Translated to English:", en_txt)
         except sr.UnknownValueError:
-            print("Could not understand audio.")
+            print(" Could not understand audio.")
             return
 
         except sr.RequestError as e:
             print(f" API Error: {e}")
             return
 
-    #model
+#-----------model
     model='txt2img'
 
-    #i/p data
+#--------------i/p data
     in_data={
         'prompt': f'{en_txt}',
         'neg_prompt': ' bad anatomy',
@@ -61,6 +66,7 @@ def speech_to_image():
     }
     try:
         res=monster_client.generate(model,in_data)
+        print('q')
         #print(res['output'])
         img_url = res['output'][0]
         filename='gen-img.jpg'
@@ -76,8 +82,9 @@ def speech_to_image():
             webbrowser.open(filename)
 
         else:
-            print("failed to download")
+            print(" failed to download")
     except Exception as e:
-        print('ms api error')
+        print(' monster api error')
 
+#-----------function call
 speech_to_image()
